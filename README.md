@@ -1,4 +1,4 @@
-OSX (homebrew) precompiled binaries for various libraries
+OSX (homebrew) precompiled binaries
 ====
 **note**: all libraries are compiled for 64bits MacOSX.
 
