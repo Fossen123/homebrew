@@ -29,3 +29,11 @@ And compile/execute it with:
     Hello from thread 5, nthreads 8
     Hello from thread 6, nthreads 8
     Hello from thread 7, nthreads 8
+
+
+# Qt 4.8.3 
+
+As Qt was already in homebrew I used the **bottle** to package the binaries.
+First download the tar.gz archive, then install using the command:
+
+    brew install qt-4.8.5.mavericks.bottle.5.tar.gz
