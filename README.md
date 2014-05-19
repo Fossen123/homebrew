@@ -2,7 +2,7 @@ OSX (homebrew) precompiled binaries
 ====
 **note**: all libraries are compiled for 64bits MacOSX.
 
-# Clang + OpenMP (including STL headers) for OSX 10.9.2
+## Clang + OpenMP (including STL headers) for OSX 10.9.2
 
 To install the precompiled OSX10.9.2 clang-omp:
 
@@ -31,7 +31,7 @@ And compile/execute it with:
     Hello from thread 7, nthreads 8
 
 
-# Qt 4.8.3 
+## Qt 4.8.3 
 
 As Qt was already in homebrew I used the **bottle** to package the binaries.
 The following first downloads the tar.gz archive, then installs it with brew:
