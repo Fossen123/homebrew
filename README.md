@@ -6,16 +6,16 @@ OSX (homebrew) precompiled binaries
 
 To install the precompiled OSX10.9.2 clang-omp:
 
-    ~/Developer/homebrew: brew install http://lgg.epfl.ch/SHARE/clangomp.rb
+    ~/Developer/homebrew: brew install https://github.com/drtaglia/homebrew/raw/master/clangomp.rb
 
 
 To install the openmp runtime libraries:
 
-    ~/Developer/homebrew: brew install http://lgg.epfl.ch/SHARE/openmprtl.rb
+    ~/Developer/homebrew: brew install https://github.com/drtaglia/homebrew/raw/master/openmprtl.rb
     
 You can then compile the cpp example:
 
-    ~/Developer/homebrew: wget http://lgg.epfl.ch/SHARE/hello_openmp.cpp
+    ~/Developer/homebrew: wget https://raw.githubusercontent.com/drtaglia/homebrew/master/clangomp.cpp
     
 And compile/execute it with: 
 
@@ -34,6 +34,7 @@ And compile/execute it with:
 # Qt 4.8.3 
 
 As Qt was already in homebrew I used the **bottle** to package the binaries.
-First download the tar.gz archive, then install using the command:
+The following first downloads the tar.gz archive, then installs it with brew:
 
+    wget https://raw.githubusercontent.com/drtaglia/homebrew/master/qt-4.8.5.mavericks.bottle.5.tar.gz
     brew install qt-4.8.5.mavericks.bottle.5.tar.gz
