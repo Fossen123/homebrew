@@ -13,7 +13,7 @@ To install the openmp runtime libraries:
 
     ~/Developer/homebrew: brew install https://github.com/drtaglia/homebrew/raw/master/openmprtl.rb
     
-You can then compile the cpp example:
+You can then download the cpp example with *wget* (brew install wget, if necessary):
 
     ~/Developer/homebrew: wget https://raw.githubusercontent.com/drtaglia/homebrew/master/clangomp.cpp
     
