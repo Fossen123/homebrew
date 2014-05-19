@@ -1,7 +1,7 @@
 require 'formula'
 class Clangomp < Formula
   version "3.4"
-  url 'http://lgg.epfl.ch/SHARE/clangomp.tar.gz'
+  url 'https://github.com/drtaglia/homebrew/raw/master/clangomp.tar.gz'
   homepage 'http://clang-omp.github.io'
   sha1 'ad9ced9f278edfaca25d1b4ca679be70f73a48a3'
 
