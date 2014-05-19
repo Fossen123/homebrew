@@ -2,7 +2,7 @@ OSX (homebrew) precompiled binaries
 ====
 **note**: all libraries are compiled for 64bits MacOSX.
 
-# Clang + OpenMP for OSX 10.9.2
+# Clang + OpenMP (including STL headers) for OSX 10.9.2
 
 To install the precompiled OSX10.9.2 clang-omp:
 
