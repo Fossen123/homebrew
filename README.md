@@ -1,23 +1,23 @@
 OSX (homebrew) precompiled binaries
 ====
-**note**: all libraries are compiled for 64bits MacOSX.
+**note**: all libraries are compiled for 64bits MacOSX 10.9 (Maverick)
 
-## Clang + OpenMP (including STL headers) for OSX 10.9.2
+## Clang + OpenMP (including STL headers!)
 
-To install the precompiled OSX10.9.2 clang-omp:
+To install the precompiled OSX10.9.2 **clang-omp**:
 
     ~/Developer/homebrew: brew install https://github.com/drtaglia/homebrew/raw/master/clangomp.rb
 
 
-To install the openmp runtime libraries:
+To install the **openmp runtime libraries** as mentioned :
 
     ~/Developer/homebrew: brew install https://github.com/drtaglia/homebrew/raw/master/openmprtl.rb
     
-You can then download the cpp example with *wget* (brew install wget, if necessary):
+You can then download the **cpp example** with wget (brew install wget, if necessary):
 
     ~/Developer/homebrew: wget https://raw.githubusercontent.com/drtaglia/homebrew/master/clangomp.cpp
     
-And compile/execute it with: 
+And finally **compile/execute** it!! 
 
     ~/Developer/homebrew: /usr/local/bin/clang++ -fopenmp clangomp.cpp -o clangomp
     ~/Developer/homebrew: ./clangomp
