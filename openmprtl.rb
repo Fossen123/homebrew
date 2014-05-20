@@ -1,7 +1,7 @@
 require 'formula'
 class Openmprtl < Formula
   version "13.05.2014"
-  url 'http://lgg.epfl.ch/SHARE/openmprtl.tar.gz'
+  url 'https://github.com/drtaglia/homebrew/raw/master/openmprtl.tar.gz'
   homepage 'https://www.openmprtl.org/'
   sha1 'b560171a8f4e474d13a2ecf49c47cd64d0b330a5'
 
