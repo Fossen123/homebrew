@@ -4,6 +4,10 @@
 #include <cmath>
 
 class GLWidget : public QGLWidget{ 
+public:
+    GLWidget(QGLFormat format) : QGLWidget(format){}
+
+private:
     void initializeGL(){
         /// In modelview hand is at origin   
         glClearColor(1.0, 1.0, 1.0, 1.0); ///< essential using white, as labels start from 0!!!!!
@@ -53,7 +57,14 @@ class GLWidget : public QGLWidget{
 
 int main(int argc, char *argv[]){
     QApplication app(argc, argv);
-    GLWidget widget;
+    
+    ///--- Setup for OpenGL4
+    QGLFormat glFormat;
+    glFormat.setVersion( 3, 3 );
+    glFormat.setProfile( QGLFormat::CoreProfile );
+    glFormat.setSampleBuffers( true );
+    
+    GLWidget widget(glFormat);
     widget.resize(640,480);
     widget.show();
     return app.exec();
