@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(thrust_simple)
+project(cuda_simple)
 
 #--- These settings will be inherited by CUDA
 set(CMAKE_CXX_COMPILER "/usr/local/bin/clang++")
@@ -12,7 +12,6 @@ list(APPEND CUDA_NVCC_FLAGS "-gencode arch=compute_20,code=sm_20")
 set(CUDA_HOST_COMPILER ${CMAKE_CXX_COMPILER})
 # If you have some C++11 stuff you don't want to propagate
 #set(CUDA_PROPAGATE_HOST_FLAGS False)
-
 
 #-- Compile
 cuda_add_library(cuda STATIC simple.cu simple.cuh)
