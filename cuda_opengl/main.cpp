@@ -1,3 +1,8 @@
+#define USE_FRAMEBUFFER
+#ifdef USE_FRAMEBUFFER
+    #include "CustomFrameBuffer.h"
+#endif 
+
 #include <QApplication>
 #include <QGLWidget>
 #include <QOpenGLVertexArrayObject>
@@ -9,11 +14,6 @@
 #include "helper_cuda.h"
 #include "check_error_gl.h"
 #include "easylogging++.h"
-
-#define USE_FRAMEBUFFER
-#ifdef USE_FRAMEBUFFER
-    #include "CustomFrameBuffer.h"
-#endif 
 
 /// Format class to enable OpenGL4 core profile 
 class OpenGLFormat : public QGLFormat{
@@ -105,7 +105,7 @@ int main(int argc, char* argv[]){
     
     TIMED_BLOCK(timer,"1000x executions")
     {
-        bool WITH_DRAW = false;
+        bool WITH_DRAW = true;
         printf("WITH_DRAW: %s\n", WITH_DRAW?"Yes":"No");
         
         for (int i = 0; i < 1000; ++i) {

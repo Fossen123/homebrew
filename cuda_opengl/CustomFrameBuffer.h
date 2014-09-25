@@ -1,7 +1,7 @@
 #pragma once
 
 #if __unix__
-#define GL_GLEXT_PROTOTYPES 1
+#define GL_GLEXT_PROTOTYPES
 #include <GL/gl.h>
 #include <GL/glext.h>
 #endif
