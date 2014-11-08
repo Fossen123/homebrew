@@ -1,57 +1,102 @@
 #include <QApplication>
 #include <QGLWidget>
-#include <QDebug>
-#include <cmath>
+#include <QGLBuffer>
+#include <QGLShaderProgram>
+#include <QOpenGLVertexArrayObject>
 
-class GLWidget : public QGLWidget{ 
+const char * vshader = 
+    "#version 330\n"
+    "in vec3 position;\n"
+    "out vec2 uv;\n"
+    "void main() { \n"
+    "    gl_Position = vec4(position, 1.0); \n"
+    "    uv = (vec2(position) + vec2(1,1))/2.0; \n"   
+    "}";
+
+const char * fshader = 
+    "#version 330\n"
+    "in vec2 uv;\n"
+    "out vec4 color;\n"
+    "void main() {\n"
+    "   color = vec4(uv[0], uv[1], 0.0, 1.0);\n"
+    "}\n";
+
+
+class GLWidget : public QGLWidget{
+private: 
+    QGLShaderProgram program;
+    QOpenGLVertexArrayObject vao;
+    QGLBuffer vertexbuffer;
+
 public:
     GLWidget(QGLFormat format) : QGLWidget(format){}
 
 private:
-    void initializeGL(){
-        /// In modelview hand is at origin   
-        glClearColor(1.0, 1.0, 1.0, 1.0); ///< essential using white, as labels start from 0!!!!!
-        glEnable(GL_DEPTH_TEST);
-        glDisable(GL_LIGHTING);
-        glDisable(GL_DOUBLEBUFFER);
-        glEnableClientState(GL_VERTEX_ARRAY);
+    /// @overload QGLWidget
+    void initializeGL(){     
+        printf("OpenGL %d.%d\n",this->format().majorVersion(),this->format().minorVersion());
         
-        /// Output opengl version
-        qDebug("OpenGL %d.%d",this->format().majorVersion(),this->format().minorVersion());
+        ///--- Create an array object to store properties
+        {
+            bool success = vao.create();
+            Q_ASSERT(success);
+            vao.bind();
+        }
+        
+        ///--- Load/compile shaders
+        {
+            bool vok = program.addShaderFromSourceCode(QGLShader::Vertex, vshader);
+            bool fok = program.addShaderFromSourceCode(QGLShader::Fragment, fshader);
+            bool lok = program.link ();
+            Q_ASSERT(lok && vok && fok);
+            bool success = program.bind();
+            Q_ASSERT(success);
+        }
+        
+        ///--- Create vertex buffer/attributes "position"
+        {
+            static float vertices[] = {
+                -1.0000,-1.0000,+0.0000,
+                +1.0000,-1.0000,+0.0000,
+                -1.0000,+1.0000,+0.0000,
+                +1.0000,+1.0000,+0.0000,};
+            
+            vertexbuffer = QGLBuffer(QGLBuffer::VertexBuffer);
+            bool success = vertexbuffer.create();
+            Q_ASSERT(success);
+            vertexbuffer.setUsagePattern( QGLBuffer::StaticDraw ); 
+            success = vertexbuffer.bind();
+            Q_ASSERT(success);
+            vertexbuffer.allocate( vertices, sizeof(vertices) );
+            program.setAttributeBuffer("position", GL_FLOAT, 0, 3 );
+            program.enableAttributeArray("position");
+        }
+        
+        ///--- Unbind to avoid pollution
+        vao.release();
+        program.release();
+        
+        ///--- Background
+        glClearColor(1.0, 1.0, 1.0, 1.0);
+                
+        ///--- Setup opengl flags
+        glDisable(GL_DEPTH_TEST);
     }
     
-    void qgluPerspective(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar){
-        const GLdouble ymax = zNear * tan(fovy * M_PI / 360.0);
-        const GLdouble ymin = -ymax;
-        const GLdouble xmin = ymin * aspect;
-        const GLdouble xmax = ymax * aspect;
-        glFrustum(xmin, xmax, ymin, ymax, zNear, zFar);
-    }
-    
-    /// @note camera decides renderer size
+#if 0 // Why is this not having any effect? 
     void resizeGL(int width, int height){
-    	if (height==0) height=1;
-    	glViewport(0,0,width,height);
-    	glMatrixMode(GL_PROJECTION);
-    	glLoadIdentity();
-    	qgluPerspective(45.0f,(GLfloat)width/(GLfloat)height,0.1f,100.0f);
-    	glMatrixMode(GL_MODELVIEW);
-    	glLoadIdentity();
-     }
+        glViewport(0, 0, .5*width, .5*height);
+    }
+#endif
     
+    /// @overload QGLWidget
     void paintGL(){
-        glMatrixMode(GL_MODELVIEW);         
-        glLoadIdentity();
-        glClear(GL_COLOR_BUFFER_BIT);  
-
-        glTranslatef(0.0,0.0,-1.0);
-        glColor3f(1.0,0.0,0.0);
-        glBegin(GL_POLYGON); 
-            glVertex2f(-0.5, -0.5); 
-            glVertex2f(-0.5, 0.5);
-            glVertex2f(0.5, 0.5); 
-            glVertex2f(0.5, -0.5); 
-        glEnd();        
+        program.bind();
+        vao.bind();
+            glClear(GL_COLOR_BUFFER_BIT);
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); ///< we have 4 verts
+        vao.release();
+        program.release();
     }
 };
 
@@ -60,9 +105,9 @@ int main(int argc, char *argv[]){
     
     ///--- Setup for OpenGL4
     QGLFormat glFormat;
-    glFormat.setVersion( 3, 3 );
+    glFormat.setVersion( 3, 2 );
     glFormat.setProfile( QGLFormat::CoreProfile );
-    glFormat.setSampleBuffers( true );
+    glFormat.setSampleBuffers( false );
     
     GLWidget widget(glFormat);
     widget.resize(640,480);
